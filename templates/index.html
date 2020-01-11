@@ -4,18 +4,24 @@
 <head>
     <meta charset="gbk">
     <title>{{ name }}'s Watchlist</title> 
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"> 
 </head> 
 <body>
-    <h2>{{ name }}'s Watchlist</h2>
+    <h2>
+          <img alt="fish" class="fish" src="{{ url_for('static', filename='images/fish.png') }}">
+          {{ name }}'s Watchlist
+    </h2>
 
     <p>{{ movies|length }} Titles</p>
-    <ul>
+    <ul class="movie-list">
         {% for movie in movies %}  
         <li>{{ movie.title }} - {{ movie.year }}</li>  
         {% endfor %}  
     </ul>
+	<img alt="firefly" class="firefly" src="{{ url_for('static', filename='images/firefly.gif') }}">
     <footer>
-        <small>&copy; 2018 <a href="http://helloflask.com/tutorial">HelloFlask</a></sma ll>
+		<small>&copy; 2018 <a href="http://helloflask.com/tutorial">HelloFlask</a></small>
     </footer> 
 </body> 
 </html>

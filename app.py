@@ -47,6 +47,11 @@ def test_url_for():
     print(url_for('test_url_for', num=2))  # 输出：/test?num=2    
     return 'Test page'
 
+# @app.route('/static/favicon.ico')
+# def get_fav():
+#     print(__name__)
+#     return app.send_static_file('favicon.ico')
+
 
 
 
