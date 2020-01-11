@@ -9,7 +9,7 @@ from flask import Flask
 from flask import url_for
 from flask import render_template
 
-name = 'Grey Li'
+name = 'Nicolas Xiong'
 movies = [{'title': 'My Neighbor Totoro', 'year': '1988'},
                            {'title': 'Dead Poets Society', 'year': '1989'},    
                            {'title': 'A Perfect World', 'year': '1993'},    
