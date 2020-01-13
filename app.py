@@ -16,8 +16,17 @@ from flask_login import login_user
 from flask_login import logout_user
 from flask_login import login_required, current_user
 import os
+import sys
 import click
 
+
+
+#兼容处理
+WIN = sys.platform.startswith('win') 
+if WIN:  # 如果是 Windows 系统，使用三个斜线    
+    prefix = 'sqlite:///' 
+else:  # 否则使用四个斜线    
+    prefix = 'sqlite:////'
 
 
 app=Flask(__name__)
@@ -27,7 +36,8 @@ app.config['DEBUG']=True
 
 #从环境变量中读取密钥，如果没有读取到，则使用默认值
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE', 'data.db'))
+app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE', 'data.db'))
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭对模型修改的监控
 db = SQLAlchemy(app)  # 初始化扩展，传入程序实例 app
 
 login_manager = LoginManager(app)  # 实例化扩展类
@@ -171,7 +181,7 @@ def forge():
     """Generate fake data."""    
     db.create_all()
     
-    name = '熊'
+    name = 'Xiong'
     movies = [
                            {'title': 'My Neighbor Totoro', 'year': '1988'},
                            {'title': 'Dead Poets Society', 'year': '1989'},    
