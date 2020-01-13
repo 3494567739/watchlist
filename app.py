@@ -25,7 +25,9 @@ app=Flask(__name__)
 app.secret_key='d'     #按错误提示加的密钥
 app.config['DEBUG']=True
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.root_path, 'data.db')
+#从环境变量中读取密钥，如果没有读取到，则使用默认值
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE', 'data.db'))
 db = SQLAlchemy(app)  # 初始化扩展，传入程序实例 app
 
 login_manager = LoginManager(app)  # 实例化扩展类
