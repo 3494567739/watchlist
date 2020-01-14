@@ -54,6 +54,7 @@ input[name=year] {
 
 /* µÁ”∞¡–±Ì */ 
 .movie-list {    
+	background-color: #ffffff; 
     list-style-type: none;    
     padding: 0;    
     margin-bottom: 10px;    
@@ -67,7 +68,7 @@ input[name=year] {
     border-bottom:none; 
     }
 .movie-list li:hover {    
-    background-color: #f8f9fa; 
+    background-color: #00ffff; 
         }
     
 /* ¡˙√®Õº∆¨ */ 
@@ -124,5 +125,21 @@ input[name=year] {
 .inline-form {    
 	display: inline; 
 	}
+
+/*Õ¯“≥±≥æ∞*/
+.body-background{
+	background-attachment: fixed;
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+.foot-background{
+/*	background-color: #1E90FF; */
+}
+.html{
+	width: 100%;
+	height: 100%;	
+}
 
 

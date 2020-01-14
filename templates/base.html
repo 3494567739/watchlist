@@ -1,5 +1,5 @@
 <!DOCTYPE html> 
-<html lang="en">
+<html class="html" lang="en">
 
 <head>
 	{% block head %}
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"> 
 	{% endblock %}
 </head> 
-<body>
+<body class="body-background" background="{{url_for('static', filename='images/snow.jpg')}}">
 	{% for message in get_flashed_messages() %}    
 	     <div class="alert">{{ message }}</div> 
 	{% endfor %}
@@ -30,7 +30,7 @@
 		  </ul>    
 	</nav>    
 	{% block content %}{% endblock %}
-    <footer>
+    <footer class="foot-background" >
 		<small>&copy; 2020 <a>老熊</a></small>
     </footer> 
 </body> 
