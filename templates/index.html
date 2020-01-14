@@ -18,8 +18,8 @@
 					   <input class="btn" type="submit" name="delete" value="删除" onclick="return confirm('Are you sure?')">
 				   </form>
 				   <a class="btn" href="{{ url_for('edit', movie_id=movie.id) }}">编辑</a>
-				   {% endif %}
-			       <a class="imdb" href="https://v.qq.com/x/search/?q={{ movie.title }}" target= "_blank" title="在腾讯视频里搜索这个影视">转到</a>        
+				   {% endif %} 
+				   <a class="imdb" href="https://v.qq.com/x/search/?q={{ movie.title }}" target= "_blank" title="在腾讯视频里搜索这个影视">转到</a> 
 			   </span>
 		</li>  
         {% endfor %}  
