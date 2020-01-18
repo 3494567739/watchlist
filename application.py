@@ -51,7 +51,11 @@ def inject_user():           #这个函数返回的变量（以字典键值对�
     user = User.query.first()    
     return dict(user=user)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
+def plot_():     
+    return render_template('plot.html')
+
+@app.route('/index', methods=['GET', 'POST'])
 def index():     
     if request.method == 'POST':  # 判断是否是 POST 请求    
         if not current_user.is_authenticated:  # 如果当前用户未认证            
