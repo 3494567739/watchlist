@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>{{ movies|length }} <a>个标题</a></p>
+      <center>
+    <h3>{{ movies|length }} <a>个标题</a></h3>
+	  </center>
 	{% if current_user.is_authenticated %}
 	<form method="post">    
 	    影视名称 <input type="text" name="title" autocomplete="off" required>    
