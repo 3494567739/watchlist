@@ -5,7 +5,7 @@
 	{% block head %}
     <meta charset="uft-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.name }}的web应用程序</title> 
+    <title>{{ user.name }}'s web application</title> 
 	<script type="text/javascript" src="{{ url_for('static', filename='echarts.common.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='dynamic_plot.js') }}"></script>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -30,7 +30,7 @@
 	</nav>    
 	{% block content %}{% endblock %}
     <footer class="foot-background" >
-		<small>&copy; 2020 <a>老熊</a></small>
+		<small>&copy; 2020 <a>Nicolas Xiong</a></small>
     </footer> 
 </body> 
 </html>

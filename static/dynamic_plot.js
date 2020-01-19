@@ -24,10 +24,12 @@ for (var j = 120; j >= 0 ; j--) {
 }
 
 setInterval(function () {
+	myChart.hideLoading();
+	document.getElementById("td").innerHTML = data[data.length - 1].toFixed(3);
     addData(true);
     myChart.setOption({
 		title: {
-			text: '温室光照度'
+			text: '大棚光照度'
 		},
 		legend: {
 		     data:['光照度（klux）']
@@ -36,7 +38,7 @@ setInterval(function () {
             data: time
         },
     	yAxis: {
-        	boundaryGap: [0, '20%'],
+        	boundaryGap: [0, '40%'],
         	type: 'value'
     	},
         series: [{
