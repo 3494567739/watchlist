@@ -4,37 +4,47 @@
     <div id="main" style="width: 100%;height:100%;"></div>
     <script type="text/javascript">
 var myChart = echarts.init(document.getElementById('main'));
-var base = +new Date(2014, 9, 3);
-var oneDay = 24 * 3600 * 1000;
-var date = [];
-var data = [Math.random() * 150];
-var now = new Date(base);
+
+var data = [20000];
+var time = [];
 
 function addData(shift) {
-    now = [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/');
-    date.push(now);
-    data.push((Math.random() - 0.4) * 10 + data[data.length - 1]);
-
-    if (shift) {
-        date.shift();
+	if (data[data.length-1]>10000 && data[data.length-1]<40000){
+    data.push((Math.random() - 0.5) * 1000 + data[data.length - 1]);
+	}
+	else{
+		data.push(data[data.length-2]);
+	}
+	
+    if (shift){ 
         data.shift();
-    }
-
-    now = new Date(+new Date(now) + oneDay);
+		}
 }
 
-for (var i = 1; i < 100; i++) {
+//添加初始数据
+for (var i = 1; i < 120; i++) {
     addData();
 }
 
+for (var j = 120; j >= 0 ; j--) {
+    time.push(j+'秒前')
+}
+
+
 option = {
+    title: {
+        text: '温室光照度实时监测'
+    },
+	legend: {
+	     data:['光照度（lux）']
+	},
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: date
+        data: time
     },
     yAxis: {
-        boundaryGap: [0, '50%'],
+        boundaryGap: [0, '20%'],
         type: 'value'
     },
 	dataZoom: [
@@ -54,7 +64,7 @@ option = {
 	],
     series: [
         {
-            name:'成交',
+            name:'光照度（lux）',
             type:'line',
             data: data
         }
@@ -64,8 +74,14 @@ option = {
 setInterval(function () {
     addData(true);
     myChart.setOption({
+		title: {
+			text: '温室光照度实时监测'
+		},
+		legend: {
+		     data:['光照度（lux）']
+		},
         xAxis: {
-            data: date
+            data: time
         },
     	yAxis: {
         	boundaryGap: [0, '20%'],
@@ -83,11 +99,17 @@ setInterval(function () {
 		    }
 		],
         series: [{
-            name:'成交',
+            name:'光照度（lux）',
 			type:'line',
+            //smooth:true,
+            symbol: 'none',
+            stack: 'a',
+            areaStyle: {
+                normal: {}
+            },
             data: data
         }]
     });
-}, 500);
+}, 1000);
     </script>
 {% endblock %}
