@@ -17,7 +17,7 @@
 	{% endfor %}
     <nav>        
 	      <ul>            
-		        <li><a href="{{ url_for('plot_') }}">绘图</a></li>
+		        <li><a href="{{ url_for('plot_') }}">数据</a></li>
 				<li><a href="{{ url_for('index') }}">影视</a></li>
 			    {% if current_user.is_authenticated %} 
 			      <li><a href="{{ url_for('settings') }}">设置</a></li>   
