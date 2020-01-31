@@ -160,7 +160,9 @@ def weather():
     headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'}
     r=requests.get(link,headers=headers)
     if r.status_code != 200:
-        return r.status_code
+        dic={}
+        dic['position']=r.status_code
+        return jsonify(dic)
     else:
         response = r.content.decode('utf-8')#中文解码
         position=re.findall('<a href="'+link+'" target="_blank">(.*)</a>',response)#获取位置信息
