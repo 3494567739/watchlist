@@ -6,8 +6,8 @@
     <meta charset="uft-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ user.name }}'s web application</title> 
-	<script type="text/javascript" src="{{ url_for('static', filename='echarts.common.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='dynamic_plot.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/echarts.common.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"> 
 	{% endblock %}
@@ -17,7 +17,8 @@
 	     <div class="alert">{{ message }}</div> 
 	{% endfor %}
     <nav>        
-	      <ul>            
+	      <ul>          
+		        <li><a href="{{ url_for('wheather') }}">天气</a></li>
 		        <li><a href="{{ url_for('plot_') }}">数据</a></li>
 				<li><a href="{{ url_for('index') }}">影视</a></li>
 			    {% if current_user.is_authenticated %} 

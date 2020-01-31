@@ -31,9 +31,6 @@ setInterval(function () {
 		title: {
 			text: '大棚光照度'
 		},
-		legend: {
-		     data:['光照度（klux）']
-		},
         xAxis: {
             data: time
         },

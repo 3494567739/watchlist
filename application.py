@@ -6,7 +6,7 @@ Created on Sat Jan 11 07:37:07 2020
 """
 
 from flask import Flask
-from flask import request, url_for, redirect, flash
+from flask import request, url_for, redirect, flash,jsonify
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy  # 导入扩展类
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -15,9 +15,13 @@ from flask_login import UserMixin
 from flask_login import login_user
 from flask_login import logout_user
 from flask_login import login_required, current_user
+from bs4 import BeautifulSoup
+import requests#这个是用来获取其他网站的数据，与flask自带request不一样
 import os
 import sys
 import click
+import json
+import re
 
 
 
@@ -51,9 +55,15 @@ def inject_user():           #这个函数返回的变量（以字典键值对�
     user = User.query.first()    
     return dict(user=user)
 
-@app.route('/', methods=['GET'])
+@app.route('/plot', methods=['GET'])
 def plot_():     
     return render_template('plot.html')
+
+
+@app.route('/')
+def wheather():
+    return render_template('wheather.html')
+
 
 @app.route('/index', methods=['GET', 'POST'])
 def index():     
@@ -143,6 +153,40 @@ def settings():
         return redirect(url_for('index'))
     return render_template('settings.html')
 
+
+@app.route('/weather',methods=['POST','GET'])   #用于输出传输json到前端
+def weather():
+    link = 'http://www.weather.com.cn/weather/101200701.shtml'
+    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'}
+    r=requests.get(link,headers=headers)
+    response = r.content.decode('utf-8')#中文解码
+    position=re.findall('<a href="'+link+'" target="_blank">(.*)</a>',response)#获取位置信息
+    
+    soup=BeautifulSoup(response,"html.parser")#解析网页文本
+    text=soup.find_all(text=re.compile("observe24h_data"))#寻找有相关内容的标签里的内容
+    wheather_data=str(text).lstrip(r"['\nvar observe24h_data = ").rstrip(r";\n']")#转为字符串类型，去除非json格式数据(去头去尾) 
+    json_=json.loads(wheather_data)
+    
+    #获取列表
+    temperature=[]
+    time=[]
+    humidity=[]
+    air_quality=[]
+    for t in json_['od']['od2']:
+        time.append(str(t['od21'])+'点')#获取时间列表
+        temperature.append(t['od22']) #获取温度列表
+        humidity.append(t['od27']) #获取湿度列表
+        air_quality.append(t['od28'])#获取空气质量列表
+        
+    #翻转列表，重构字典格式
+    dic={}
+    dic['position']=position
+    dic['time']=time[::-1]#反向赋值
+    dic['temperature']=temperature[::-1]  
+    dic['humidity']=humidity[::-1]
+    dic['air_quality']=air_quality[::-1]
+
+    return jsonify(dic)  #以json字符串格式发送数据
 
 
 
