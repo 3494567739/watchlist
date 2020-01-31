@@ -21,6 +21,8 @@ import os
 import sys
 import click
 import json
+import time
+import random
 import re
 
 
@@ -157,7 +159,9 @@ def settings():
 @app.route('/weather',methods=['POST','GET'])   #用于输出传输json到前端
 def weather():
     link = 'http://www.weather.com.cn/weather/101200701.shtml'
-    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'}
+    headers={'User-Agent': 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.7 (KHTML, like Gecko) Ubuntu/11.04 Chromium/16.0.912.77 Chrome/16.0.912.77 Safari/535.7'
+             }
+    r=requests.get(link,headers=headers)
     my_headers = [
     "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36",
@@ -173,13 +177,15 @@ def weather():
     "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.7 (KHTML, like Gecko) Ubuntu/11.04 Chromium/16.0.912.77 Chrome/16.0.912.77 Safari/535.7",
     "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0 "
     ]#清求头集合
-    r=requests.get(link,headers=headers)
     if r.status_code != 200:
         for header in my_headers:
-             headers['User-Agent']=header
-             r=requests.get(link,headers=headers)
-             if(r.status_code == 200):
-                 break
+              sleep_time=random.randint(0,2)+random.random()
+              time.sleep(sleep_time)
+              headers['User-Agent']=header
+              r=requests.get(link,headers=headers)
+              if(r.status_code == 200):
+                  break
+
              
     response = r.content.decode('utf-8')#中文解码
     position=re.findall('<a href="'+link+'" target="_blank">(.*)</a>',response)#获取位置信息
@@ -191,11 +197,11 @@ def weather():
         
     #获取列表
     temperature=[]
-    time=[]
+    time_=[]
     humidity=[]
     air_quality=[]
     for t in json_['od']['od2']:
-        time.append(str(t['od21'])+'点')#获取时间列表
+        time_.append(str(t['od21'])+'点')#获取时间列表
         temperature.append(t['od22']) #获取温度列表
         humidity.append(t['od27']) #获取湿度列表
         air_quality.append(t['od28'])#获取空气质量列表
@@ -203,7 +209,7 @@ def weather():
     #翻转列表，重构字典格式
     dic={}
     dic['position']=position
-    dic['time']=time[::-1]#反向赋值
+    dic['time']=time_[::-1]#反向赋值
     dic['temperature']=temperature[::-1]  
     dic['humidity']=humidity[::-1]
     dic['air_quality']=air_quality[::-1]
