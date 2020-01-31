@@ -158,61 +158,53 @@ def settings():
 
 @app.route('/weather',methods=['POST','GET'])   #用于输出传输json到前端
 def weather():
-    link = 'http://www.weather.com.cn/weather/101200701.shtml'
-    headers={'User-Agent': 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.7 (KHTML, like Gecko) Ubuntu/11.04 Chromium/16.0.912.77 Chrome/16.0.912.77 Safari/535.7'
-             }
-    r=requests.get(link,headers=headers)
-    my_headers = [
-    "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14",
-    "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64; Trident/6.0)",
-    'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11',
-    'Opera/9.25 (Windows NT 5.1; U; en)',
-    'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)',
-    'Mozilla/5.0 (compatible; Konqueror/3.5; Linux) KHTML/3.5.5 (like Gecko) (Kubuntu)',
-    'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070731 Ubuntu/dapper-security Firefox/1.5.0.12',
-    'Lynx/2.8.5rel.1 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/1.2.9',
-    "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.7 (KHTML, like Gecko) Ubuntu/11.04 Chromium/16.0.912.77 Chrome/16.0.912.77 Safari/535.7",
-    "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0 "
-    ]#清求头集合
-    if r.status_code != 200:
-        for header in my_headers:
-              sleep_time=random.randint(0,2)+random.random()
-              time.sleep(sleep_time)
-              headers['User-Agent']=header
-              r=requests.get(link,headers=headers)
-              if(r.status_code == 200):
-                  break
-
-             
-    response = r.content.decode('utf-8')#中文解码
-    position=re.findall('<a href="'+link+'" target="_blank">(.*)</a>',response)#获取位置信息
+    # link = 'http://www.weather.com.cn/weather/101200701.shtml'
+    # headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'
+    #          }
+    # r=requests.get(link,headers=headers)
+    # # if r.status_code != 200:
+    # #     for header in my_headers:
+    # #           sleep_time=random.randint(0,2)+random.random()
+    # #           time.sleep(sleep_time)
+    # #           headers['User-Agent']=header
+    # #           r=requests.get(link,headers=headers)
+    # #           if(r.status_code == 200):
+    # #               break        
+    # response = r.content.decode('utf-8')#中文解码
+    # position=re.findall('<a href="'+link+'" target="_blank">(.*)</a>',response)#获取位置信息
         
-    soup=BeautifulSoup(response,"html.parser")#解析网页文本
-    text=soup.find_all(text=re.compile("observe24h_data"))#寻找有相关内容的标签里的内容
-    wheather_data=str(text).lstrip(r"['\nvar observe24h_data = ").rstrip(r";\n']")#转为字符串类型，去除非json格式数据(去头去尾) 
-    json_=json.loads(wheather_data)
+    # soup=BeautifulSoup(response,"html.parser")#解析网页文本
+    # text=soup.find_all(text=re.compile("observe24h_data"))#寻找有相关内容的标签里的内容
+    # wheather_data=str(text).lstrip(r"['\nvar observe24h_data = ").rstrip(r";\n']")#转为字符串类型，去除非json格式数据(去头去尾) 
+    # json_=json.loads(wheather_data)
         
-    #获取列表
-    temperature=[]
-    time_=[]
-    humidity=[]
-    air_quality=[]
-    for t in json_['od']['od2']:
-        time_.append(str(t['od21'])+'点')#获取时间列表
-        temperature.append(t['od22']) #获取温度列表
-        humidity.append(t['od27']) #获取湿度列表
-        air_quality.append(t['od28'])#获取空气质量列表
+    # #获取列表
+    # temperature=[]
+    # time_=[]
+    # humidity=[]
+    # air_quality=[]
+    # for t in json_['od']['od2']:
+    #     time_.append(str(t['od21'])+'点')#获取时间列表
+    #     temperature.append(t['od22']) #获取温度列表
+    #     humidity.append(t['od27']) #获取湿度列表
+    #     air_quality.append(t['od28'])#获取空气质量列表
             
-    #翻转列表，重构字典格式
+    # #翻转列表，重构字典格式
+    # dic={}
+    # dic['position']=position
+    # dic['time']=time_[::-1]#反向赋值
+    # dic['temperature']=temperature[::-1]  
+    # dic['humidity']=humidity[::-1]
+    # dic['air_quality']=air_quality[::-1]
+    link ="http://www.santostang.com/"
+    headers={'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
+    r= requests.get(link,headers=headers)
+    print (r.text)
+    soup=BeautifulSoup(r.text,"html.parser") #使用BeautifulSoup解析这段代码
+    title=soup.find("h1",class_="post-title").a.text.strip()
+    print (title)
     dic={}
-    dic['position']=position
-    dic['time']=time_[::-1]#反向赋值
-    dic['temperature']=temperature[::-1]  
-    dic['humidity']=humidity[::-1]
-    dic['air_quality']=air_quality[::-1]
+    dic['position']=title
     
     return jsonify(dic)  #以json字符串格式发送数据
 
