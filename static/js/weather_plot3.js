@@ -15,7 +15,7 @@
 								  color: "#fff"
 								},
 				            },{
-								top: '55%',
+								top: '50%',
 								left: 'center',
 								text: '空气质量',
 								textStyle: {
