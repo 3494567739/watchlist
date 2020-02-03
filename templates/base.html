@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css"> 
 	{% endblock %}
 </head> 
-<body class="body-background" background="{{url_for('static', filename='images/snow.jpg')}}">
+<body class="body-background" background="{{url_for('static', filename='images/snow.jpeg')}}">
 	{% for message in get_flashed_messages() %}    
 	     <div class="alert">{{ message }}</div> 
 	{% endfor %}

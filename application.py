@@ -158,53 +158,45 @@ def settings():
 
 @app.route('/weather',methods=['POST','GET'])   #用于输出传输json到前端
 def weather():
-    # link = 'http://www.weather.com.cn/weather/101200701.shtml'
-    # headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'
-    #          }
-    # r=requests.get(link,headers=headers)
-    # # if r.status_code != 200:
-    # #     for header in my_headers:
-    # #           sleep_time=random.randint(0,2)+random.random()
-    # #           time.sleep(sleep_time)
-    # #           headers['User-Agent']=header
-    # #           r=requests.get(link,headers=headers)
-    # #           if(r.status_code == 200):
-    # #               break        
-    # response = r.content.decode('utf-8')#中文解码
-    # position=re.findall('<a href="'+link+'" target="_blank">(.*)</a>',response)#获取位置信息
+    link = 'http://www.weather.com.cn/weather/101200701.shtml'
+    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'
+              }
+    r=requests.get(link,headers=headers)
+    # if r.status_code != 200:
+    #     for header in my_headers:
+    #           sleep_time=random.randint(0,2)+random.random()
+    #           time.sleep(sleep_time)
+    #           headers['User-Agent']=header
+    #           r=requests.get(link,headers=headers)
+    #           if(r.status_code == 200):
+    #               break        
+    response = r.content.decode('utf-8')#中文解码
+    position=re.findall('<a href="'+link+'" target="_blank">(.*)</a>',response)#获取位置信息
         
-    # soup=BeautifulSoup(response,"html.parser")#解析网页文本
-    # text=soup.find_all(text=re.compile("observe24h_data"))#寻找有相关内容的标签里的内容
-    # wheather_data=str(text).lstrip(r"['\nvar observe24h_data = ").rstrip(r";\n']")#转为字符串类型，去除非json格式数据(去头去尾) 
-    # json_=json.loads(wheather_data)
+    soup=BeautifulSoup(response,"html.parser")#解析网页文本
+    text=soup.find_all(text=re.compile("observe24h_data"))#寻找有相关内容的标签里的内容
+    wheather_data=str(text).lstrip(r"['\nvar observe24h_data = ").rstrip(r";\n']")#转为字符串类型，去除非json格式数据(去头去尾) 
+    json_=json.loads(wheather_data)
         
-    # #获取列表
-    # temperature=[]
-    # time_=[]
-    # humidity=[]
-    # air_quality=[]
-    # for t in json_['od']['od2']:
-    #     time_.append(str(t['od21'])+'点')#获取时间列表
-    #     temperature.append(t['od22']) #获取温度列表
-    #     humidity.append(t['od27']) #获取湿度列表
-    #     air_quality.append(t['od28'])#获取空气质量列表
+    #获取列表
+    temperature=[]
+    time_=[]
+    humidity=[]
+    air_quality=[]
+    for t in json_['od']['od2']:
+        time_.append(str(t['od21'])+'点')#获取时间列表
+        temperature.append(t['od22']) #获取温度列表
+        humidity.append(t['od27']) #获取湿度列表
+        air_quality.append(t['od28'])#获取空气质量列表
             
-    # #翻转列表，重构字典格式
-    # dic={}
-    # dic['position']=position
-    # dic['time']=time_[::-1]#反向赋值
-    # dic['temperature']=temperature[::-1]  
-    # dic['humidity']=humidity[::-1]
-    # dic['air_quality']=air_quality[::-1]
-    link ="http://www.santostang.com/"
-    headers={'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
-    r= requests.get(link,headers=headers)
-    print (r.text)
-    soup=BeautifulSoup(r.text,"html.parser") #使用BeautifulSoup解析这段代码
-    title=soup.find("h1",class_="post-title").a.text.strip()
-    print (title)
+    #翻转列表，重构字典格式
     dic={}
-    dic['position']=title
+    dic['position']=position
+    dic['time']=time_[::-1]#反向赋值
+    dic['temperature']=temperature[::-1]  
+    dic['humidity']=humidity[::-1]
+    dic['air_quality']=air_quality[::-1]
+
     
     return jsonify(dic)  #以json字符串格式发送数据
 
