@@ -159,8 +159,7 @@ def settings():
 @app.route('/weather',methods=['POST','GET'])   #用于输出传输json到前端
 def weather():
     link = 'http://www.weather.com.cn/weather/101200701.shtml'
-    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'
-              }
+    headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'}
     r=requests.get(link,headers=headers)
     # if r.status_code != 200:
     #     for header in my_headers:
