@@ -20,8 +20,8 @@
 	      <ul>          
 		        <li><a href="{{ url_for('wheather') }}">天气</a></li>
 		        <li><a href="{{ url_for('plot_') }}">数据</a></li>
-				<li><a href="{{ url_for('index') }}">影视</a></li>
 			    {% if current_user.is_authenticated %} 
+				  <li><a href="{{ url_for('index') }}">影视</a></li>
 			      <li><a href="{{ url_for('settings') }}">设置</a></li>   
 				  <li><a href="{{ url_for('logout') }}">退出</a></li>  
 				{% else %}    

@@ -12,6 +12,7 @@ python-dotenv = "*"
 flask-sqlalchemy = "*"
 flask-login = "*"
 requests = "*"
+timedate = "*"
 
 [requires]
 python_version = "3.6"

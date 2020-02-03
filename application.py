@@ -17,6 +17,7 @@ from flask_login import logout_user
 from flask_login import login_required, current_user
 from bs4 import BeautifulSoup
 import requests#这个是用来获取其他网站的数据，与flask自带request不一样
+#from timedate import timedelta
 import os
 import sys
 import click
@@ -39,6 +40,7 @@ app=Flask(__name__)
  
 app.secret_key='d'     #按错误提示加的密钥
 app.config['DEBUG']=True
+#app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 
 #从环境变量中读取密钥，如果没有读取到，则使用默认值
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
@@ -158,7 +160,7 @@ def settings():
 
 @app.route('/weather',methods=['POST','GET'])   #用于输出传输json到前端
 def weather():
-    link = 'http://www.weather.com.cn/weather/101200701.shtml'
+    link = 'http://www.weather.com.cn/weather/101200101.shtml'
     headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'}
     r=requests.get(link,headers=headers)
     # if r.status_code != 200:
